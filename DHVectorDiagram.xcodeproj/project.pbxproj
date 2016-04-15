@@ -14,6 +14,8 @@
 		E519F8C51CC09C37003689E9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E519F8C41CC09C37003689E9 /* Images.xcassets */; };
 		E519F8C81CC09C37003689E9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E519F8C61CC09C37003689E9 /* LaunchScreen.xib */; };
 		E519F8D41CC09C37003689E9 /* DHVectorDiagramTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E519F8D31CC09C37003689E9 /* DHVectorDiagramTests.m */; };
+		E519F8E21CC09C4B003689E9 /* DHVectorDiagram.m in Sources */ = {isa = PBXBuildFile; fileRef = E519F8DF1CC09C4B003689E9 /* DHVectorDiagram.m */; };
+		E519F8E31CC09C4B003689E9 /* DHVectorDiagramView.m in Sources */ = {isa = PBXBuildFile; fileRef = E519F8E11CC09C4B003689E9 /* DHVectorDiagramView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,11 @@
 		E519F8CD1CC09C37003689E9 /* DHVectorDiagramTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DHVectorDiagramTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E519F8D21CC09C37003689E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E519F8D31CC09C37003689E9 /* DHVectorDiagramTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DHVectorDiagramTests.m; sourceTree = "<group>"; };
+		E519F8DD1CC09C4B003689E9 /* DHMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHMatrix.h; sourceTree = "<group>"; };
+		E519F8DE1CC09C4B003689E9 /* DHVectorDiagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHVectorDiagram.h; sourceTree = "<group>"; };
+		E519F8DF1CC09C4B003689E9 /* DHVectorDiagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHVectorDiagram.m; sourceTree = "<group>"; };
+		E519F8E01CC09C4B003689E9 /* DHVectorDiagramView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHVectorDiagramView.h; sourceTree = "<group>"; };
+		E519F8E11CC09C4B003689E9 /* DHVectorDiagramView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHVectorDiagramView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +92,11 @@
 				E519F8BC1CC09C37003689E9 /* AppDelegate.m */,
 				E519F8BE1CC09C37003689E9 /* ViewController.h */,
 				E519F8BF1CC09C37003689E9 /* ViewController.m */,
+				E519F8DD1CC09C4B003689E9 /* DHMatrix.h */,
+				E519F8DE1CC09C4B003689E9 /* DHVectorDiagram.h */,
+				E519F8DF1CC09C4B003689E9 /* DHVectorDiagram.m */,
+				E519F8E01CC09C4B003689E9 /* DHVectorDiagramView.h */,
+				E519F8E11CC09C4B003689E9 /* DHVectorDiagramView.m */,
 				E519F8C11CC09C37003689E9 /* Main.storyboard */,
 				E519F8C41CC09C37003689E9 /* Images.xcassets */,
 				E519F8C61CC09C37003689E9 /* LaunchScreen.xib */,
@@ -219,6 +231,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E519F8E21CC09C4B003689E9 /* DHVectorDiagram.m in Sources */,
+				E519F8E31CC09C4B003689E9 /* DHVectorDiagramView.m in Sources */,
 				E519F8C01CC09C37003689E9 /* ViewController.m in Sources */,
 				E519F8BD1CC09C37003689E9 /* AppDelegate.m in Sources */,
 				E519F8BA1CC09C37003689E9 /* main.m in Sources */,

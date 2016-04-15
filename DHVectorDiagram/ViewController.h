@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DHVectorDiagramView.h"
+#import "DHVectorDiagram.h"
 
 @interface ViewController : UIViewController
 
