@@ -6,22 +6,30 @@
 //  Copyright (c) 2016年 DreamHack. All rights reserved.
 //
 
-#ifndef LunarLander_DHMatrix_h
-#define LunarLander_DHMatrix_h
+#ifndef DHVectorDiagram_DHMatrix_h
+#define DHVectorDiagram_DHMatrix_h
 
 
 #define DH_INLINE   static inline
 
 #import <Foundation/Foundation.h>
 
+typedef double * DHLinearVector;
+
 typedef struct {
     
     int row, column;
+    // 先取行后取列
+    // 比如values[0]表示取到了第0行(仍然是一个指针，指向第0行的double类型的数组)
+    // values[0][1]表示取到了第0行第1列
+    // 如果要直接取第n列，请调用下方的行数取列向量
     double **values;
     
 } DHMatrix;
 
-DH_INLINE size_t DHMatrixValueSize(DHMatrix matrix)
+// 目前只有矩阵乘法
+
+DH_INLINE size_t DHMatrixValueByteSize(DHMatrix matrix)
 {
     return matrix.row * matrix.column * sizeof(double);
 }
@@ -57,6 +65,11 @@ DH_INLINE DHMatrix DHMatrixMakeZero(int row, int column)
     DHMatrix matrix;
     matrix.row = row;
     matrix.column = column;
+    
+    if (row * column == 0) {
+        matrix.values = NULL;
+        return matrix;
+    }
     
     double ** values = malloc(matrix.row * sizeof(double *));
     for (int i = 0; i < matrix.row; ++i) {
@@ -113,16 +126,35 @@ DH_INLINE DHMatrix DHMatrixMakeIdentity(int length)
     return matrix;
 }
 
+// 拷贝一个矩阵
+DH_INLINE DHMatrix DHMatrixMakeWithMatrix(DHMatrix matrix)
+{
+    DHMatrix aMatrix = DHMatrixMakeZero(matrix.row, matrix.column);
+    
+    for (int i = 0; i < matrix.row; i++) {
+        memcpy(aMatrix.values[i], matrix.values[i], sizeof(double) * matrix.column);
+    }
+    
+    return aMatrix;
+}
+
 #pragma mark - 矩阵计算
 
 // 从矩阵中获取某一行的值（行向量）
-DH_INLINE double *DHMatrixRowVectorAtRow(DHMatrix matrix, int row)
+// 行向量并不是直接取的values指针，而是创建了一个新的一维数组然后把值赋进这个数组
+// 所以构造出来的行向量需要手动管理内存，请在使用结束后进行release（调用free(vector)）
+DH_INLINE DHLinearVector DHMatrixRowVectorAtRow(DHMatrix matrix, int row)
 {
-    return matrix.values[row];
+    size_t size = matrix.column * sizeof(double);
+    DHLinearVector rowVector = malloc(size);
+    memcpy(rowVector, matrix.values[row], size);
+    return rowVector;
 }
 
 // 从矩阵中获取某一列的值（列向量）
-DH_INLINE double *DHMatrixColumnVectorAtColumn(DHMatrix matrix, int column)
+// 列向量并不是直接取的values指针，而是创建了一个新的一维数组然后把值赋进这个数组
+// 所以构造出来的列向量需要手动管理内存，请在使用结束后进行release（调用free(vector)）
+DH_INLINE DHLinearVector DHMatrixColumnVectorAtColumn(DHMatrix matrix, int column)
 {
     double * columnVector = malloc(matrix.row * sizeof(double));
     
@@ -179,11 +211,15 @@ DH_INLINE DHMatrix DHMatrixSubstraction(DHMatrix matrix1, DHMatrix matrix2)
     // 先把减数取反
     DHMatrix subMatrix = DHMatrixInvert(matrix2);
     // 将两个矩阵相加
-    return DHMatrixAddition(matrix1, subMatrix);
+    DHMatrix resultMatrix = DHMatrixAddition(matrix1, subMatrix);
+    
+    // 释放减数矩阵
+    DHMatrixRelease(subMatrix);
+    return resultMatrix;
 }
 
 // 在开始矩阵乘法之前，先实现行向量乘以列向量的算法
-DH_INLINE double DHMatrixRowVectorMutiplyColumnVector(double *rowVector, double *columnVector, int length)
+DH_INLINE double DHMatrixRowVectorMutiplyColumnVector(DHLinearVector rowVector, DHLinearVector columnVector, int length)
 {
     CGFloat result = 0;
     for (int i = 0; i < length; ++i) {
@@ -206,18 +242,24 @@ DH_INLINE DHMatrix DHMatrixMultiplication(DHMatrix matrix1, DHMatrix matrix2)
     for (int i = 0; i < matrix1.row; ++i) {
         
         // 取左边第i行的行向量
-        double * rowVector = DHMatrixRowVectorAtRow(matrix1, i);
+        DHLinearVector rowVector = DHMatrixRowVectorAtRow(matrix1, i);
         for (int j = 0; j < matrix2.column; ++j) {
             
             // 用行向量乘以右边的列向量
             
             // 取右边的列向量
-            double * columnVector = DHMatrixColumnVectorAtColumn(matrix2, j);
+            DHLinearVector columnVector = DHMatrixColumnVectorAtColumn(matrix2, j);
             // 乘
             double product = DHMatrixRowVectorMutiplyColumnVector(rowVector, columnVector, matrix2.row);
             // 将乘积作为结果矩阵的第i行第j列的元素
             productMatrix.values[i][j] = product;
+            
+            // 释放列向量
+            free(columnVector);
         }
+        
+        // 释放行向量
+        free(rowVector);
     }
     
     return productMatrix;
@@ -251,18 +293,6 @@ DH_INLINE DHMatrix DHTranslationMatrix(double dx, double dy)
     return DHMatrixMakeWithString(3, 3, matrixString, @",");
 }
 
-// 用矩阵计算对点进行平移
-DH_INLINE DHMatrix DHMatrixTranslatePoint(CGPoint point, double dx, double dy)
-{
-    // 把点转换成矩阵
-    DHMatrix matrix = DHMatrixFromCGPoint(point);
-    // 得到平移矩阵
-    DHMatrix translationMatrix = DHTranslationMatrix(dx, dy);
-    
-    // 用点矩阵乘以平移矩阵
-    return DHMatrixMultiplication(matrix, translationMatrix);
-}
-
 // 缩放矩阵
 // sx 0  0
 // 0  sy 0
@@ -271,18 +301,6 @@ DH_INLINE DHMatrix DHScaleMatrix(double sx, double sy)
 {
     NSString * matrixString = [NSString stringWithFormat:@"%f,0,0,0,%f,0,0,0,1",sx,sy];
     return DHMatrixMakeWithString(3, 3, matrixString, @",");
-}
-
-// 用矩阵计算对点基于原点进行缩放
-DH_INLINE DHMatrix DHMatrixScalePoint(CGPoint point, double sx, double sy)
-{
-    // 把点转换成矩阵
-    DHMatrix matrix = DHMatrixFromCGPoint(point);
-    // 得到缩放矩阵
-    DHMatrix scaleMatrix = DHScaleMatrix(sx, sy);
-    
-    // 用点矩阵乘以缩放矩阵
-    return DHMatrixMultiplication(matrix, scaleMatrix);
 }
 
 // 旋转矩阵
@@ -294,19 +312,6 @@ DH_INLINE DHMatrix DHRotationMatrix(double theta)
     NSString * matrixString = [NSString stringWithFormat:@"%f,%f,0,%f,%f,0,0,0,1",cos(theta),sin(theta),-sin(theta),cos(theta)];
     return DHMatrixMakeWithString(3, 3, matrixString, @",");
 }
-
-// 用矩阵计算对点基于原点进行旋转
-DH_INLINE DHMatrix DHMatrixRotatePoint(CGPoint point, double theta)
-{
-    // 把点转换成矩阵
-    DHMatrix matrix = DHMatrixFromCGPoint(point);
-    // 得到旋转矩阵
-    DHMatrix rotationMatrix = DHRotationMatrix(theta);
-    
-    // 用点矩阵乘以缩放矩阵
-    return DHMatrixMultiplication(matrix, rotationMatrix);
-}
-
 
 
 #endif

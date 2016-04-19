@@ -11,6 +11,8 @@
 
 @interface DHVectorDiagramView : UIView
 
+@property (nonatomic, strong) DHVectorDiagram * vectorDiagram;
+
 - (instancetype)initWithFrame:(CGRect)frame vectorDiagram:(DHVectorDiagram *)vectorDiagram;
 
 @end

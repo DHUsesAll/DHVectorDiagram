@@ -16,6 +16,7 @@
 		E519F8D41CC09C37003689E9 /* DHVectorDiagramTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E519F8D31CC09C37003689E9 /* DHVectorDiagramTests.m */; };
 		E519F8E21CC09C4B003689E9 /* DHVectorDiagram.m in Sources */ = {isa = PBXBuildFile; fileRef = E519F8DF1CC09C4B003689E9 /* DHVectorDiagram.m */; };
 		E519F8E31CC09C4B003689E9 /* DHVectorDiagramView.m in Sources */ = {isa = PBXBuildFile; fileRef = E519F8E11CC09C4B003689E9 /* DHVectorDiagramView.m */; };
+		E51BA09D1CC5D18100DCA50E /* DHVector2D.m in Sources */ = {isa = PBXBuildFile; fileRef = E51BA09C1CC5D18100DCA50E /* DHVector2D.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,8 @@
 		E519F8DF1CC09C4B003689E9 /* DHVectorDiagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHVectorDiagram.m; sourceTree = "<group>"; };
 		E519F8E01CC09C4B003689E9 /* DHVectorDiagramView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHVectorDiagramView.h; sourceTree = "<group>"; };
 		E519F8E11CC09C4B003689E9 /* DHVectorDiagramView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHVectorDiagramView.m; sourceTree = "<group>"; };
+		E51BA09B1CC5D18100DCA50E /* DHVector2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHVector2D.h; sourceTree = "<group>"; };
+		E51BA09C1CC5D18100DCA50E /* DHVector2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHVector2D.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +95,8 @@
 				E519F8BC1CC09C37003689E9 /* AppDelegate.m */,
 				E519F8BE1CC09C37003689E9 /* ViewController.h */,
 				E519F8BF1CC09C37003689E9 /* ViewController.m */,
+				E51BA09B1CC5D18100DCA50E /* DHVector2D.h */,
+				E51BA09C1CC5D18100DCA50E /* DHVector2D.m */,
 				E519F8DD1CC09C4B003689E9 /* DHMatrix.h */,
 				E519F8DE1CC09C4B003689E9 /* DHVectorDiagram.h */,
 				E519F8DF1CC09C4B003689E9 /* DHVectorDiagram.m */,
@@ -231,6 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E51BA09D1CC5D18100DCA50E /* DHVector2D.m in Sources */,
 				E519F8E21CC09C4B003689E9 /* DHVectorDiagram.m in Sources */,
 				E519F8E31CC09C4B003689E9 /* DHVectorDiagramView.m in Sources */,
 				E519F8C01CC09C37003689E9 /* ViewController.m in Sources */,
@@ -426,6 +432,7 @@
 				E519F8D91CC09C37003689E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E519F8DA1CC09C37003689E9 /* Build configuration list for PBXNativeTarget "DHVectorDiagramTests" */ = {
 			isa = XCConfigurationList;
@@ -434,6 +441,7 @@
 				E519F8DC1CC09C37003689E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

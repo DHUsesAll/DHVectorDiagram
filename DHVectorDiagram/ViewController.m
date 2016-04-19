@@ -16,7 +16,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"登月工程";
+    
+    // 五角星
+//    DHVectorDiagram * diagram = [DHVectorDiagram pentastarWithLength:1];
+    // 正七边形
+    DHVectorDiagram * diagram = [DHVectorDiagram regularPolygon:7 edgeLength:1];
+    diagram.unitLength = 50;
+    [diagram translateWithDeltaX:2 deltaY:2];
+//    [diagram rotateWithRadian:36.f/180 * M_PI];
+    DHVectorDiagramView * view = [[DHVectorDiagramView alloc] initWithFrame:self.view.bounds vectorDiagram:diagram];
+    [self.view addSubview:view];
     
     NSValue * point1 = [NSValue valueWithCGPoint:CGPointMake(-1, -2)];
     NSValue * point2 = [NSValue valueWithCGPoint:CGPointMake(1, -2)];
@@ -35,12 +44,12 @@
     [vectorDiagram translateWithDeltaX:3 deltaY:5];
     [vectorDiagram rotateWithRadian:M_PI_2];
     [vectorDiagram scaleWithScalingFactorX:1 scalingFactorY:2];
-    
-//    [vectorDiagram translateWithDeltaX:0 deltaY:1];
+//
+    [vectorDiagram translateWithDeltaX:0 deltaY:4];
     [vectorDiagram rotateWithRadian:M_PI_4];
     [vectorDiagram scaleWithScalingFactorX:2 scalingFactorY:1];
-    
-    DHVectorDiagramView * view = [[DHVectorDiagramView alloc] initWithFrame:self.view.bounds vectorDiagram:vectorDiagram];
+//
+    view = [[DHVectorDiagramView alloc] initWithFrame:self.view.bounds vectorDiagram:vectorDiagram];
     [self.view addSubview:view];
     
 }

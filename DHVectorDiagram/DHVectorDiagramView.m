@@ -10,8 +10,6 @@
 
 @interface DHVectorDiagramView ()
 
-@property (nonatomic, strong) DHVectorDiagram * vectorDiagram;
-
 @end
 
 @implementation DHVectorDiagramView
@@ -22,11 +20,15 @@
     if (self) {
         self.vectorDiagram = vectorDiagram;
         self.backgroundColor = [UIColor clearColor];
-        [self setNeedsDisplay];
     }
     return self;
 }
 
+- (void)setVectorDiagram:(DHVectorDiagram *)vectorDiagram
+{
+    _vectorDiagram = vectorDiagram;
+    [self setNeedsDisplay];
+}
 
 - (void)drawRect:(CGRect)rect
 {
