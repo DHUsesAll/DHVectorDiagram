@@ -185,7 +185,7 @@ DH_INLINE DHMatrix DHMatrixInvert(DHMatrix matrix)
 // 矩阵加法
 DH_INLINE DHMatrix DHMatrixAddition(DHMatrix matrix1, DHMatrix matrix2)
 {
-    // 如果它们的行列数不相等，则无法进行相加，返回零向量
+    // 如果它们的行列数不相等，则无法进行相加，返回零矩阵
     if (matrix1.row != matrix2.row || matrix1.column != matrix2.column) {
         return DHMatrixMakeZero(0, 0);
     }

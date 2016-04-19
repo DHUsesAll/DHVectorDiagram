@@ -106,12 +106,14 @@
         // 将矢量图的点转换为矩阵表达，然后分别乘以变形矩阵
         CGPoint point = [obj CGPointValue];
         DHMatrix matrix = DHMatrixFromCGPoint(point);
-        matrix = DHMatrixMultiplication(matrix, self.transformMatrix);
+        DHMatrix transformMatrix = DHMatrixMultiplication(matrix, self.transformMatrix);
         
-        point = DHMatrixToCGPoint(matrix);
+        point = DHMatrixToCGPoint(transformMatrix);
         
         [vertexBuffers addObject:[NSValue valueWithCGPoint:point]];
         
+        DHMatrixRelease(matrix);
+        DHMatrixRelease(transformMatrix);
     }];
     
     self.worldVertexBuffers = [vertexBuffers copy];
