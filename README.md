@@ -1,6 +1,6 @@
 # DHVectorDiagram
 
-#Description
+## Description
 
 用来构造一个抽象的2D矢量图
 
@@ -16,7 +16,7 @@
 
 里面的DHMatrix是矩阵结构体，为了解决矢量图的各种变形算法而设计出来的，暂时只有乘法，可用于其他地方
 
-#Usage
+## Usage
 
 ```objective-c
 - (void)viewDidLoad {
